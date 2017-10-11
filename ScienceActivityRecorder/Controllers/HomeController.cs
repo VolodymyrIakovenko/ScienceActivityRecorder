@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ScienceActivityRecorder.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ScienceActivityRecorder.Controllers
 {
@@ -15,23 +9,19 @@ namespace ScienceActivityRecorder.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult PublicationActivity()
         {
-            ViewData["Message"] = "Your application description page.";
-
             return View();
         }
 
-        public IActionResult Contact()
+        public IActionResult ProfessionalActivity()
         {
-            ViewData["Message"] = "Your contact page.";
-
             return View();
         }
 
-        public IActionResult Error()
+        public IActionResult Reports()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
