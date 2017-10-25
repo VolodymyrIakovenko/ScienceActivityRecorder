@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ScienceActivityRecorder.Providers;
 
 namespace ScienceActivityRecorder.Controllers
 {
@@ -6,7 +7,7 @@ namespace ScienceActivityRecorder.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View(PersonalInfoProvider.IakovenkoOE);
         }
 
         public IActionResult PublicationActivity()

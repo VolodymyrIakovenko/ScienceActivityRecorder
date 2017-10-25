@@ -1,4 +1,6 @@
-﻿@{
+﻿@model PersonalInfo
+
+@{
     ViewData["Title"] = "Особисті данні";
 }
 
@@ -6,68 +8,68 @@
 
     <div class="form-group row">
         <div class="col-md-6">
-            <label for="usr">Прізвище:</label>
-            <input type="text" class="form-control" id="usr" value="Яковенко" disabled>
+            <label asp-for="LastName"></label>
+            <input type="text" class="form-control" id="usr" value="@Model.LastName" disabled>
         </div>
 
         <div class="col-md-6">
-            <label for="usr">Ім'я:</label>
-            <input type="text" class="form-control" id="usr" value="Олександр" disabled>
+            <label asp-for="FirstName"></label>
+            <input type="text" class="form-control" id="usr" value="@Model.FirstName" disabled>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
-            <label for="usr">По-батькові:</label>
-            <input type="text" class="form-control" id="usr" value="Євгенович" disabled/>
+            <label asp-for="MiddleName"></label>
+            <input type="text" class="form-control" id="usr" value="@Model.MiddleName" disabled/>
         </div>
         
         <div class="col-md-6">
-            <label for="usr">Дата народження:</label>
-            <input type="datetime" class="form-control" id="usr" value="01.01.1960" disabled/>
+            <label asp-for="BirthDate"></label>
+            <input type="datetime" class="form-control" id="usr" value="@Model.BirthDate" disabled/>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
-            <label for="usr">Посада, рік:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>Доцент, Херсонський політехнічний коледж Одеського національного політехнічного університету, директор, з 2001</textarea>
+            <label asp-for="Position"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.Position</textarea>
         </div>
 
         <div class="col-md-6">
-            <label for="usr">Педагогічне звання, посада:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>Кандидат технічних наук, викладач, доцент за кафедрою «Природничо-наукової підготовки» спеціаліст вищої категорії, викладач методист</textarea>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <div class="col-md-6">
-            <label for="usr">Найменування закладу, який закінчив викладач:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>Київський політехнічний інститут, 1988р. «Електронні обчислювальні машини», інженер-системотехнік.</textarea>
-        </div>
-
-        <div class="col-md-6">
-            <label for="usr">Найменування всіх навчальних дисциплін, які закріплені за викладачем:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>Архітектура комп’ютерів (70), Комп’ютерна схемотехніка (30)</textarea>
+            <label asp-for="Degree"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.Degree</textarea>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
-            <label for="usr">Відомості про підвищення кваліфікації викладача:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>Університет менеджменту освіти НАПН України ДВНЗ «Університет менеджменту освіти центральний інститут післядипломної педагогічної освіти, директори ВНЗ І-ІІ р.а.», 27.01.2014 – 27.06.2014, свід. № 875/14 Ц від 27.06.2014, «Відкрита освіта і дистанційне навчання у ВНЗ»</textarea>
+            <label asp-for="EducationalInstitution"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.EducationalInstitution</textarea>
         </div>
 
         <div class="col-md-6">
-            <label for="usr">Домашня адреса, телефон:</label>
-            <textarea rows="4" class="form-control" id="usr" disabled>м.Херсон, вул. Небесної сотні (40 років Жовтня), буд. 23-а, к. 35-41, (0552) 39-78-41</textarea>
+            <label asp-for="AcademicDisciplines"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.AcademicDisciplines</textarea>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
-            <label for="usr">Вислуга років:</label>
-            <input type="text" class="form-control" id="usr" value="30" disabled>
+            <label asp-for="AdvancedTraining"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.AdvancedTraining</textarea>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="HomeAddress"></label>
+            <textarea rows="4" class="form-control" id="usr" disabled>@Model.HomeAddress</textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label asp-for="Seniority"></label>
+            <input type="text" class="form-control" id="usr" value="@Model.Seniority" disabled>
         </div>
     </div>
 
