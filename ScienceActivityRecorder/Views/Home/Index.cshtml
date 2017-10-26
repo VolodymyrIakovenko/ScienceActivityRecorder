@@ -9,67 +9,67 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="LastName"></label>
-            <input type="text" class="form-control" id="usr" value="@Model.LastName" disabled>
+            <input asp-for="LastName" type="text" class="form-control" value="@Model.LastName" disabled>
         </div>
 
         <div class="col-md-6">
             <label asp-for="FirstName"></label>
-            <input type="text" class="form-control" id="usr" value="@Model.FirstName" disabled>
+            <input asp-for="FirstName" type="text" class="form-control" value="@Model.FirstName" disabled>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="MiddleName"></label>
-            <input type="text" class="form-control" id="usr" value="@Model.MiddleName" disabled/>
+            <input asp-for="MiddleName" type="text" class="form-control" value="@Model.MiddleName" disabled/>
         </div>
         
         <div class="col-md-6">
             <label asp-for="BirthDate"></label>
-            <input type="datetime" class="form-control" id="usr" value="@Model.BirthDate" disabled/>
+            <input asp-for="BirthDate" type="datetime" class="form-control" value="@Model.BirthDate.ToString("dd.MM.yyyy")" disabled/>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="Position"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.Position</textarea>
+            <textarea asp-for="Position" rows="4" class="form-control" disabled>@Model.Position</textarea>
         </div>
 
         <div class="col-md-6">
             <label asp-for="Degree"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.Degree</textarea>
+            <textarea asp-for="Degree" rows="4" class="form-control" disabled>@Model.Degree</textarea>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="EducationalInstitution"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.EducationalInstitution</textarea>
+            <textarea asp-for="EducationalInstitution" rows="4" class="form-control" disabled>@Model.EducationalInstitution</textarea>
         </div>
 
         <div class="col-md-6">
             <label asp-for="AcademicDisciplines"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.AcademicDisciplines</textarea>
+            <textarea asp-for="AcademicDisciplines" rows="4" class="form-control" disabled>@Model.AcademicDisciplines</textarea>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="AdvancedTraining"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.AdvancedTraining</textarea>
+            <textarea asp-for="AdvancedTraining" rows="4" class="form-control" disabled>@Model.AdvancedTraining</textarea>
         </div>
 
         <div class="col-md-6">
             <label asp-for="HomeAddress"></label>
-            <textarea rows="4" class="form-control" id="usr" disabled>@Model.HomeAddress</textarea>
+            <textarea asp-for="HomeAddress" rows="4" class="form-control" disabled>@Model.HomeAddress</textarea>
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="Seniority"></label>
-            <input type="text" class="form-control" id="usr" value="@Model.Seniority" disabled>
+            <input asp-for="Seniority" type="text" class="form-control" value="@Model.Seniority" disabled>
         </div>
     </div>
 

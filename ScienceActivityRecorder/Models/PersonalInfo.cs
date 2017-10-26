@@ -14,8 +14,9 @@ namespace ScienceActivityRecorder.Models
         [Display(Name = "По-батькові")]
         public string MiddleName { get; set; }
 
-        [DisplayFormat(DataFormatString = "dd.MM.yyyy")]
         [Display(Name = "Дата народження")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime BirthDate { get; set; }
 
         [Display(Name = "Посада, рік")]
