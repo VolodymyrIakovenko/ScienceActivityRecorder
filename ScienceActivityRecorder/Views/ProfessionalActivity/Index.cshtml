@@ -1,3 +1,122 @@
-﻿@{
+﻿@model ProfessionalActivityIndexViewModel
+
+@{
     ViewData["Title"] = "Професійна активність";
 }
+
+<div class="alert alert-success" id="saveNotification" role="alert" style="@(Model.OperationResult == OperationResult.Success ? "display:block" : "display:none")">
+    <strong>Інформація збережена!</strong>
+</div>
+
+<div class="alert alert-danger" id="saveNotification" role="alert" style="@(Model.OperationResult == OperationResult.Error ? "display:block" : "display:none")">
+    <strong>Помилка під час збереження!</strong>
+</div>
+
+<form asp-controller="ProfessionalActivity" asp-action="Index" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+    <input type="hidden" asp-for="ProfessionalActivityInfo.Id" />
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num4ScientificManagement" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num4ScientificManagement" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num5ParticipationInInternationalProjects" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num5ParticipationInInternationalProjects" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num6LecturesInForeignLanguage" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num6LecturesInForeignLanguage" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num7WorkInExpertBoard" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num7WorkInExpertBoard" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num8ScientificGuidenceFunctions" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num8ScientificGuidenceFunctions" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num9MangementOfPriceWinnerStudent" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num9MangementOfPriceWinnerStudent" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num10OrganizationalWorkInEducationalInstitutions" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num10OrganizationalWorkInEducationalInstitutions" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num11ParticipationInValidationOfScientists" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num11ParticipationInValidationOfScientists" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num12DegreeOfDoctor" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num12DegreeOfDoctor" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num13PatentsAvailibility" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num13PatentsAvailibility" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num15DegreeOfDoctorOfPhilosophy" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num15DegreeOfDoctorOfPhilosophy" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num16ManagementOfUkrainianOlympicWinnerStudent" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num16ManagementOfUkrainianOlympicWinnerStudent" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num17OrganizingSocialActivities" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num17OrganizingSocialActivities" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="ProfessionalActivityInfo.Num19CombinationOfTeachingAndPractice" postfix-text=":"></label>
+            <textarea asp-for="ProfessionalActivityInfo.Num19CombinationOfTeachingAndPractice" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-secondary" type="submit" value="Зберегти"/>
+        </div>
+    </div>
+
+</form>

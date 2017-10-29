@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
     public class ProfessionalActivityInfo
     {
-        [Display(Name = "Наукове керівництво(консультування) здобувача, який одержав документ про присудження наукового ступеня")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Display(Name = "Наукове керівництво (консультування) здобувача, який одержав документ про присудження наукового ступеня")]
         public string Num4ScientificManagement { get; set; }
 
         [Display(Name = "Участь у міжнародному науковому проекті/залучення до міжнародної експертизи, наявність звання «суддя міжнародної категорії»")]
