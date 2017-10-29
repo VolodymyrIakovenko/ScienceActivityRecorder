@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
     public class AdditionalActivityInfo
     {
-        [Display(Name = "Участь у профорієнтаційній роботі та довузовській підготовці молоді ")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Display(Name = "Участь у профорієнтаційній роботі та довузовській підготовці молоді")]
         public string Num20VocationalGuidenceWork { get; set; }
 
         [Display(Name = "Керівництво спільних досліджень кафедр, експериментальних та інноваційних розробок, реального ДП які впроваджені у ВНЗ або на виробництві")]

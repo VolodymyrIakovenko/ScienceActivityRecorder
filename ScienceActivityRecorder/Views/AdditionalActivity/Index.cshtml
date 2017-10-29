@@ -1,3 +1,60 @@
-﻿@{
+﻿@model AdditionalActivityIndexViewModel
+
+@{
     ViewData["Title"] = "Додаткова діяльність";
 }
+
+<div class="alert alert-success" role="alert" style="@(Model.OperationResult == OperationResult.Success ? "display:block" : "display:none")">
+    <strong>Інформація збережена!</strong>
+</div>
+
+<div class="alert alert-danger" role="alert" style="@(Model.OperationResult == OperationResult.Error ? "display:block" : "display:none")">
+    <strong>Помилка під час збереження!</strong>
+</div>
+
+<form asp-controller="AdditionalActivity" asp-action="Index" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+    
+    <input type="hidden" asp-for="AdditionalActivityInfo.Id" />
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="AdditionalActivityInfo.Num20VocationalGuidenceWork" postfix-text=":"></label>
+            <textarea asp-for="AdditionalActivityInfo.Num20VocationalGuidenceWork" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="AdditionalActivityInfo.Num21ManagementOfCommonWork" postfix-text=":"></label>
+            <textarea asp-for="AdditionalActivityInfo.Num21ManagementOfCommonWork" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="AdditionalActivityInfo.Num22CreationOfOffices" postfix-text=":"></label>
+            <textarea asp-for="AdditionalActivityInfo.Num22CreationOfOffices" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="AdditionalActivityInfo.Num23ParticipationInWorkOfBoards" postfix-text=":"></label>
+            <textarea asp-for="AdditionalActivityInfo.Num23ParticipationInWorkOfBoards" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="AdditionalActivityInfo.Num24NationalAward" postfix-text=":"></label>
+            <textarea asp-for="AdditionalActivityInfo.Num24NationalAward" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-secondary" type="submit" value="Зберегти" />
+        </div>
+    </div>
+
+</form>

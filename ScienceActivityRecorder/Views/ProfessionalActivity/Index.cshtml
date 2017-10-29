@@ -4,15 +4,16 @@
     ViewData["Title"] = "Професійна активність";
 }
 
-<div class="alert alert-success" id="saveNotification" role="alert" style="@(Model.OperationResult == OperationResult.Success ? "display:block" : "display:none")">
+<div class="alert alert-success" role="alert" style="@(Model.OperationResult == OperationResult.Success ? "display:block" : "display:none")">
     <strong>Інформація збережена!</strong>
 </div>
 
-<div class="alert alert-danger" id="saveNotification" role="alert" style="@(Model.OperationResult == OperationResult.Error ? "display:block" : "display:none")">
+<div class="alert alert-danger" role="alert" style="@(Model.OperationResult == OperationResult.Error ? "display:block" : "display:none")">
     <strong>Помилка під час збереження!</strong>
 </div>
 
 <form asp-controller="ProfessionalActivity" asp-action="Index" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+    
     <input type="hidden" asp-for="ProfessionalActivityInfo.Id" />
 
     <div class="form-group row">

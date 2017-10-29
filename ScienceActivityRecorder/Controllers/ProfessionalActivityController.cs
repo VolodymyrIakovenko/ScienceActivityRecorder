@@ -14,8 +14,7 @@ namespace ScienceActivityRecorder.Controllers
             {
                 ProfessionalActivityInfo = new ProfessionalActivityInfo
                 {
-                    Id = 1,
-                    Num4ScientificManagement = "empty"
+                    Id = 1
                 }
             };
 
