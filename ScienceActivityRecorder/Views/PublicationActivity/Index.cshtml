@@ -1,3 +1,72 @@
-﻿@{
+﻿@model PublicationActivityIndexViewModel
+
+@{
     ViewData["Title"] = "Публікаційна активність";
 }
+
+<div class="alert alert-success" role="alert" style="@(Model.OperationResult == OperationResult.Success ? "display:block" : "display:none")">
+    <strong>Інформація збережена!</strong>
+</div>
+
+<div class="alert alert-danger" role="alert" style="@(Model.OperationResult == OperationResult.Error ? "display:block" : "display:none")">
+    <strong>Помилка під час збереження!</strong>
+</div>
+
+<form asp-controller="PublicationActivity" asp-action="Index" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+
+    <input type="hidden" asp-for="PublicationActivityInfo.Id" />
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" postfix-text=":"></label>
+            <textarea asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-secondary" type="submit" value="Оновити" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" postfix-text=":"></label>
+            <textarea asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-secondary" type="submit" value="Оновити" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num3TextbookAvailability" postfix-text=":"></label>
+            <textarea asp-for="PublicationActivityInfo.Num3TextbookAvailability" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num14TeachingManualsAvailibility" postfix-text=":"></label>
+            <textarea asp-for="PublicationActivityInfo.Num14TeachingManualsAvailibility" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" postfix-text=":"></label>
+            <textarea asp-for="PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-secondary" type="submit" value="Зберегти" />
+        </div>
+    </div>
+
+</form>

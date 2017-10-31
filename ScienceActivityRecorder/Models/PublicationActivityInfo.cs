@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
     public class PublicationActivityInfo
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Наявність наукової публікації у періодичному виданні, яке включено до наукометричних баз, зокрема Scopus або Web of Science Core Collection, рекомендованих МОН")]
         public string Num1PublicationsInScienceMetricDatabases { get; set; }
 
