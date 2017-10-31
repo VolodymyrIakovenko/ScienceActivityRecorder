@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.ViewModels;
-using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Enums;
+using ScienceActivityRecorder.Providers;
 
 namespace ScienceActivityRecorder.Controllers
 {
@@ -12,10 +12,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             var viewModel = new AdditionalActivityIndexViewModel
             {
-                AdditionalActivityInfo = new AdditionalActivityInfo
-                {
-                    Id = 1
-                }
+                AdditionalActivityInfo = ProfileProvider.IakovenkoOE.AdditionalActivityInfo
             };
 
             return View(viewModel);

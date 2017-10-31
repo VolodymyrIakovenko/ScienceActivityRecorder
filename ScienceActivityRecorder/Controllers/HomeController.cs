@@ -7,7 +7,7 @@ namespace ScienceActivityRecorder.Controllers
     {
         public IActionResult Index()
         {
-            return View(PersonalInfoProvider.IakovenkoOE);
+            return View(ProfileProvider.IakovenkoOE.PersonalInfo);
         }
 
         public IActionResult PublicationActivity()
