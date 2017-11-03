@@ -1,0 +1,45 @@
+﻿@model AuthorSearchRequestViewModel
+
+@{
+    ViewData["Title"] = "Пошук автора";
+}
+
+<form asp-controller="PublicationActivity" asp-action="AuthorSearch" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label asp-for="AuthorSearchRequest.NameSurname" postfix-text=":"></label>
+            <input asp-for="AuthorSearchRequest.NameSurname" type="text" class="form-control" value="@Model.AuthorSearchRequest.NameSurname"/>
+            <span asp-validation-for="AuthorSearchRequest.NameSurname" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label asp-for="AuthorSearchRequest.Organization" postfix-text=":"></label>
+            <select asp-for="AuthorSearchRequest.Organization" class="form-control" asp-items="@(new SelectList(@Model.PredefinedOrganizations, "Name", "Name"))"></select>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label asp-for="AuthorSearchRequest.Keywords" postfix-text=":"></label>
+            <textarea asp-for="AuthorSearchRequest.Keywords" rows="4" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <label asp-for="AuthorSearchRequest.NumberOfRecords" postfix-text=":"></label>
+            <input asp-for="AuthorSearchRequest.NumberOfRecords" type="text" class="form-control" value="@Model.AuthorSearchRequest.NumberOfRecords"/>
+            <span asp-validation-for="AuthorSearchRequest.NumberOfRecords" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-6">
+            <input class="btn btn-primary" type="submit" value="Пошук" />
+        </div>
+    </div>
+
+</form>
