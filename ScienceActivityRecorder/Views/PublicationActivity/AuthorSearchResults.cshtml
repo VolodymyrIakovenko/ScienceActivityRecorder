@@ -42,7 +42,12 @@
 
                     @foreach (var publication in author.Publications)
                     {
-                        <li class="list-group-item">@publication</li>
+                        <li class="list-group-item">
+                            <b><label asp-for="@publication.Name"></label>:</b> @publication.Name <br />
+                            <b><label asp-for="@publication.Authors"></label>:</b> @publication.Authors <br />
+                            <b><label asp-for="@publication.Journal"></label>:</b> @publication.Journal <br />
+                            <b><label asp-for="@publication.Year"></label>:</b> @publication.Year <br />
+                        </li>
                     }
 
                 </ul>

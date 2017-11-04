@@ -4,6 +4,7 @@ using ScienceActivityRecorder.GoogleScholarSearch;
 using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

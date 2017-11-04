@@ -19,6 +19,6 @@ namespace ScienceActivityRecorder.Models
 
         public string Link { get; set; }
 
-        public IEnumerable<string> Publications { get; set; }
+        public IEnumerable<Publication> Publications { get; set; }
     }
 }

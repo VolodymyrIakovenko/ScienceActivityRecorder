@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using ScienceActivityRecorder.GoogleScholarSearch.Utilities;
 using ScienceActivityRecorder.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -122,23 +123,48 @@ namespace ScienceActivityRecorder.GoogleScholarSearch
                     }
                 }
 
-                var publicationNodes = htmlDocument.DocumentNode.Descendants().Where(o => o.GetAttributeValue("class", "") == "gsc_a_at");
-                var publications = publicationNodes.Select(p =>
+                var publications = new List<Publication>();
+                var publicationsBodyNode = htmlDocument.DocumentNode.SelectSingleNode("//tbody[@id='gsc_a_b']");
+                if (publicationsBodyNode != null)
                 {
-                    var text = WebUtility.HtmlDecode(p.InnerText);
-
-                    int index = text.IndexOf(" doi");
-                    if (index == -1)
+                    foreach (var publicationNode in publicationsBodyNode.ChildNodes)
                     {
-                        index = text.IndexOf(" dx.doi");
-                        if (index == -1)
+                        var publication = new Publication();
+                        
+                        var publicationNameNode = publicationNode.ChildNodes[0];
+                        if (publicationNameNode != null && publicationNameNode.ChildNodes.Count >= 3)
                         {
-                            return text.Trim();
-                        }
-                    }
 
-                    return text.Substring(0, index).Replace("=", "").Trim();
-                });
+                            var publicationName = WebUtility.HtmlDecode(publicationNameNode.ChildNodes[0].InnerText);
+                            var index1 = publicationName.IndexOf(" doi");
+                            var index2 = publicationName.IndexOf(" dx.doi");
+                            if (index1 >= 0)
+                            {
+                                publication.Name = publicationName.Substring(0, index1).Replace("=", "").Trim();
+                            }
+                            else if (index2 >= 0)
+                            {
+                                publication.Name = publicationName.Substring(0, index2).Replace("=", "").Trim();
+                            }
+                            else
+                            {
+                                publication.Name = publicationName.Trim();
+                            }
+
+                            publication.Authors = WebUtility.HtmlDecode(publicationNameNode.ChildNodes[1].InnerText);
+                            publication.Journal = WebUtility.HtmlDecode(publicationNameNode.ChildNodes[2].InnerText);
+                        }
+
+                        var publicationYearNode = publicationNode.ChildNodes[2];
+                        if (publicationYearNode != null)
+                        {
+                            Int32.TryParse(publicationYearNode.InnerText, out int year);
+                            publication.Year = year;
+                        }
+
+                        publications.Add(publication);
+                    }
+                }
 
                 return new AuthorSearchResult
                 {
