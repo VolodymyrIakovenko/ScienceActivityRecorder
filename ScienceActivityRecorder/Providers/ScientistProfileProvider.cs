@@ -2,13 +2,13 @@
 
 namespace ScienceActivityRecorder.Providers
 {
-    public class ProfileProvider
+    public class ScientistProfileProvider
     {
-        public static Profile IakovenkoOE
+        public static ScientistProfile IakovenkoOE
         {
             get
             {
-                var profile = new Profile
+                var profile = new ScientistProfile
                 {
                     PersonalInfo = PersonalInfoProvider.IakovenkoOE,
                     PublicationActivityInfo = PublicationActivityInfoProvider.IakovenkoOE,

@@ -1,3 +1,53 @@
-﻿@{
+﻿@model AuthorSearchResultsViewModel
+
+@{
     ViewData["Title"] = "Результати пошуку автора";
 }
+
+<div class="panel-group" id="accordion">
+
+    @{ 
+        var counter = 0;
+    }
+
+    @foreach (var author in Model.Authors)
+    {
+        counter++; 
+
+        <div class="panel panel-default">
+
+            <div class="panel-heading">
+                <div class="row">
+
+                    <div class="col-md-1 text-center">
+                        <a data-toggle="collapse" data-parent="#accordion" href="@("#collapse" + counter)">
+                            <h2 class="glyphicon glyphicon-chevron-down" style="color:gray"></h2>
+                        </a>
+                    </div>
+
+                    <div class="col-md-11">
+                        <h4 class="panel-title">
+                            <b><label asp-for="@author.NameSurname"></label>:</b> @author.NameSurname <br />
+                            <b><label asp-for="@author.HIndex"></label>:</b> @author.HIndex <br />
+                            <b><label asp-for="@author.Organization"></label>:</b> @author.Organization <br />
+                            <b><label asp-for="@author.Field"></label>:</b> @author.Field <br />
+                        </h4>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div id="@("collapse" + counter)" class="panel-collapse collapse">
+                <ul class="list-group">
+
+                    @foreach (var publication in author.Publications)
+                    {
+                        <li class="list-group-item">@publication</li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+
+    }
+</div>

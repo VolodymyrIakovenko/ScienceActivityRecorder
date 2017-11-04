@@ -1,6 +1,6 @@
 ﻿namespace ScienceActivityRecorder.Models
 {
-    public class Profile
+    public class ScientistProfile
     {
         public PersonalInfo PersonalInfo { get; set; }
 

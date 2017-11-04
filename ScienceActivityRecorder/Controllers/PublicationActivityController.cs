@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
+using ScienceActivityRecorder.GoogleScholarSearch;
 using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ScienceActivityRecorder.Controllers
 {
@@ -13,7 +17,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             var viewModel = new PublicationActivityIndexViewModel
             {
-                PublicationActivityInfo = ProfileProvider.IakovenkoOE.PublicationActivityInfo
+                PublicationActivityInfo = ScientistProfileProvider.IakovenkoOE.PublicationActivityInfo
             };
 
             return View(viewModel);
@@ -35,13 +39,14 @@ namespace ScienceActivityRecorder.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
         public IActionResult AuthorSearch()
         {
             var viewModel = new AuthorSearchRequestViewModel
             {
                 AuthorSearchRequest = new AuthorSearchRequest
                 {
-                    NameSurname = string.Format("{0} {1}", ProfileProvider.IakovenkoOE.PersonalInfo.FirstName, ProfileProvider.IakovenkoOE.PersonalInfo.LastName),
+                    NameSurname = string.Format("{0} {1}", ScientistProfileProvider.IakovenkoOE.PersonalInfo.FirstName, ScientistProfileProvider.IakovenkoOE.PersonalInfo.LastName),
                     NumberOfRecords = 10
                 }
             };
@@ -51,19 +56,30 @@ namespace ScienceActivityRecorder.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AuthorSearch(AuthorSearchRequestViewModel viewModel)
+        public async Task<IActionResult> AuthorSearch(AuthorSearchRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(viewModel);
             }
 
-            return RedirectToAction("AuthorSearchResults");
-        }
+            var authorSearchRequest = viewModel.AuthorSearchRequest;
 
-        public IActionResult AuthorSearchResults()
-        {
-            return View();
+            var organizationAlternativeNames = OrganizationProvider.GetAlternativeNames(authorSearchRequest.Organization);
+
+            var possibleOrganizations = new List<string>();
+            if (!string.IsNullOrEmpty(authorSearchRequest.Organization))
+            {
+                possibleOrganizations.Add(authorSearchRequest.Organization);
+                possibleOrganizations.AddRange(organizationAlternativeNames);
+            }
+
+            var profiles = await PageParser.GetProfilesFromAuthorSearch(authorSearchRequest.NameSurname, authorSearchRequest.NumberOfRecords, possibleOrganizations);
+
+            return View("AuthorSearchResults", new AuthorSearchResultsViewModel
+            {
+                Authors = profiles.Take(authorSearchRequest.NumberOfRecords)
+            });
         }
     }
 }
