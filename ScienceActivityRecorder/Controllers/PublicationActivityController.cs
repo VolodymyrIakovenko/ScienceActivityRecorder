@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
 using ScienceActivityRecorder.GoogleScholarSearch;
+using ScienceActivityRecorder.LatentSemanticAnalysis;
+using ScienceActivityRecorder.LatentSemanticAnalysis.DataObjects;
 using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.ViewModels;
@@ -90,11 +92,31 @@ namespace ScienceActivityRecorder.Controllers
                 possibleOrganizations.AddRange(organizationAlternativeNames);
             }
 
-            var profiles = await PageParser.GetProfilesFromAuthorSearch(authorSearchRequest.NameSurname, authorSearchRequest.NumberOfRecords, possibleOrganizations);
+            var profiles = new List<AuthorSearchResult>(await PageParser.GetProfilesFromAuthorSearch(authorSearchRequest.NameSurname, authorSearchRequest.NumberOfRecords, possibleOrganizations));
+
+            IEnumerable<AuthorSearchResult> orderedProfiles = new List<AuthorSearchResult>();
+            if (!string.IsNullOrEmpty(authorSearchRequest.Keywords))
+            {
+                var correlationProfiles = new Dictionary<AuthorSearchResult, double>();
+
+                var lsa = new LSA(authorSearchRequest.Keywords, profiles.Select(a => string.Join("; ", a.Publications.Select(p => p.Name))));
+                var correlations = new List<CorrelationItem>(lsa.GetCorrelations());
+                for (var i = 0; i < profiles.Count(); i++)
+                {
+                    correlationProfiles.Add(profiles[i], correlations[i].Value);
+                }
+
+                var orderedCorrelationProfiles = correlationProfiles.OrderByDescending(k => k.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
+                orderedProfiles = orderedCorrelationProfiles.Keys;
+            }
+            else
+            {
+                orderedProfiles = profiles.OrderByDescending(p => p.HIndex);
+            }
 
             return View("AuthorSearchResults", new AuthorSearchResultsViewModel
             {
-                Authors = profiles.Take(authorSearchRequest.NumberOfRecords),
+                Authors = orderedProfiles,
                 PublicationActivityInfo = viewModel.PublicationActivityInfo,
                 IsNum1 = viewModel.IsNum1,
                 IsNum2 = viewModel.IsNum2
