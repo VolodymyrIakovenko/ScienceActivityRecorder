@@ -4,15 +4,44 @@
     ViewData["Title"] = "Результати пошуку автора";
 }
 
+<form asp-controller="PublicationActivity" asp-action="IndexWithAuthorSearchResults" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
+
+    <input type="hidden" asp-for="PublicationActivityInfo.Id" value="@Model.PublicationActivityInfo.Id" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num3TextbookAvailability" value="@Model.PublicationActivityInfo.Num3TextbookAvailability" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num14TeachingManualsAvailibility" value="@Model.PublicationActivityInfo.Num14TeachingManualsAvailibility" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" value="@Model.PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" />
+
+    <div id="outputNum1Container" class="form-group row" style="@(Model.IsNum1 ? "display:block" : "display:none")">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" postfix-text=":"></label>
+            <textarea id="outputNum1" asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div id="outputNum2Container" class="form-group row" style="@(Model.IsNum2 ? "display:block" : "display:none")">
+        <div class="col-md-12">
+            <label asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" postfix-text=":"></label>
+            <textarea id="outputNum2" asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" rows="5" class="form-control"></textarea>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-12">
+            <input class="btn btn-default" type="submit" value="Завершити" />
+        </div>
+    </div>
+
+</form>
+
 <div class="panel-group" id="accordion">
 
-    @{ 
+    @{
         var counter = 0;
     }
 
     @foreach (var author in Model.Authors)
     {
-        counter++; 
+        counter++;
 
         <div class="panel panel-default">
 
@@ -33,7 +62,7 @@
                             <b><label asp-for="@author.Field"></label>:</b> @author.Field <br />
                         </h4>
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -43,10 +72,20 @@
                     @foreach (var publication in author.Publications)
                     {
                         <li class="list-group-item">
-                            <b><label asp-for="@publication.Name"></label>:</b> @publication.Name <br />
-                            <b><label asp-for="@publication.Authors"></label>:</b> @publication.Authors <br />
-                            <b><label asp-for="@publication.Journal"></label>:</b> @publication.Journal <br />
-                            <b><label asp-for="@publication.Year"></label>:</b> @publication.Year <br />
+                            <div class="row">
+
+                                <div class="col-md-10">
+                                    <b><label asp-for="@publication.Name"></label>:</b> @publication.Name <br />
+                                    <b><label asp-for="@publication.Authors"></label>:</b> @publication.Authors <br />
+                                    <b><label asp-for="@publication.Journal"></label>:</b> @publication.Journal <br />
+                                    <b><label asp-for="@publication.Year"></label>:</b> @publication.Year <br />
+                                </div>
+
+                                <div class="col-md-2 text-center" style="padding-top: 30px">
+                                    <button id="addButton" type="button" class="btn btn-default" onclick="@("addButtonClick('" + @publication.Name + ". " + publication.Authors + ". " + publication.Journal + "\\r\\n')")">Додати</button>
+                                </div>
+
+                            </div>
                         </li>
                     }
 
@@ -56,3 +95,26 @@
 
     }
 </div>
+
+@section Scripts
+    {
+    <script type="text/javascript">
+        function addButtonClick(val) {
+
+            $("html, body").animate({ scrollTop: 0 }, "fast");
+
+            var outputNum1Container = document.getElementById('outputNum1Container');
+            if (outputNum1Container.style.display == "block")
+            {
+                var outputNum1 = document.getElementById('outputNum1');
+                outputNum1.value += val;
+            }
+
+            var outputNum2Container = document.getElementById('outputNum2Container');
+            if (outputNum2Container.style.display == "block") {
+                var outputNum2 = document.getElementById('outputNum2');
+                outputNum2.value += val;
+            }
+        }
+    </script>
+}

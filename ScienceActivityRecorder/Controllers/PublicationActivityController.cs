@@ -4,7 +4,6 @@ using ScienceActivityRecorder.GoogleScholarSearch;
 using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +25,18 @@ namespace ScienceActivityRecorder.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        public IActionResult IndexWithAuthorSearchResults(AuthorSearchResultsViewModel authorViewModel)
+        {
+            var viewModel = new PublicationActivityIndexViewModel
+            {
+                PublicationActivityInfo = authorViewModel.PublicationActivityInfo,
+            };
+
+            return View("Index", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(PublicationActivityIndexViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -40,8 +51,9 @@ namespace ScienceActivityRecorder.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public IActionResult AuthorSearch()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AuthorSearchWithPublicationParameters(PublicationActivityIndexViewModel publicationViewModel, bool isNum1, bool isNum2)
         {
             var viewModel = new AuthorSearchRequestViewModel
             {
@@ -49,10 +61,13 @@ namespace ScienceActivityRecorder.Controllers
                 {
                     NameSurname = string.Format("{0} {1}", ScientistProfileProvider.IakovenkoOE.PersonalInfo.FirstName, ScientistProfileProvider.IakovenkoOE.PersonalInfo.LastName),
                     NumberOfRecords = 10
-                }
+                },
+                PublicationActivityInfo = publicationViewModel.PublicationActivityInfo,
+                IsNum1 = isNum1,
+                IsNum2 = isNum2
             };
 
-            return View(viewModel);
+            return View("AuthorSearch", viewModel);
         }
 
         [HttpPost]
@@ -79,7 +94,10 @@ namespace ScienceActivityRecorder.Controllers
 
             return View("AuthorSearchResults", new AuthorSearchResultsViewModel
             {
-                Authors = profiles.Take(authorSearchRequest.NumberOfRecords)
+                Authors = profiles.Take(authorSearchRequest.NumberOfRecords),
+                PublicationActivityInfo = viewModel.PublicationActivityInfo,
+                IsNum1 = viewModel.IsNum1,
+                IsNum2 = viewModel.IsNum2
             });
         }
     }

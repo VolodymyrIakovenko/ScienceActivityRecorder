@@ -9,5 +9,11 @@ namespace ScienceActivityRecorder.ViewModels
         public AuthorSearchRequest AuthorSearchRequest { get; set; }
 
         public List<Organization> PredefinedOrganizations { get { return OrganizationProvider.PredefinedOrganizations; } }
+
+        public PublicationActivityInfo PublicationActivityInfo { get; set; }
+
+        public bool IsNum1 { get; set; }
+
+        public bool IsNum2 { get; set; }
     }
 }

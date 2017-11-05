@@ -6,6 +6,16 @@
 
 <form asp-controller="PublicationActivity" asp-action="AuthorSearch" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
 
+    @*There probably should be a better way of how to pass parameters from the model through POST method*@
+    <input type="hidden" asp-for="IsNum1" value="@Model.IsNum1"/>
+    <input type="hidden" asp-for="IsNum2" value="@Model.IsNum2" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Id" value="@Model.PublicationActivityInfo.Id" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" value="@Model.PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" value="@Model.PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num3TextbookAvailability" value="@Model.PublicationActivityInfo.Num3TextbookAvailability" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num14TeachingManualsAvailibility" value="@Model.PublicationActivityInfo.Num14TeachingManualsAvailibility" />
+    <input type="hidden" asp-for="PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" value="@Model.PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" />
+
     <div class="form-group row">
         <div class="col-md-6">
             <label asp-for="AuthorSearchRequest.NameSurname" postfix-text=":"></label>
