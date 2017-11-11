@@ -4,11 +4,11 @@ namespace ScienceActivityRecorder.Providers
 {
     public class AdditionalActivityInfoProvider
     {
-        public static AdditionalActivityInfo IakovenkoOE
+        public static AdditionalActivity IakovenkoOE
         {
             get
             {
-                var additionalActivityInfo = new AdditionalActivityInfo
+                var additionalActivityInfo = new AdditionalActivity
                 {
                     Id = 1,
                     Num20VocationalGuidenceWork = "num20",

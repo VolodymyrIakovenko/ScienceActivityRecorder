@@ -5,11 +5,11 @@ namespace ScienceActivityRecorder.Providers
 {
     public static class PersonalInfoProvider
     {
-        public static PersonalInfo IakovenkoOE
+        public static Profile IakovenkoOE
         {
             get
             {
-                var personalInfo = new PersonalInfo
+                var personalInfo = new Profile
                 {
                     LastName = "Яковенко",
                     FirstName = "Олександр",

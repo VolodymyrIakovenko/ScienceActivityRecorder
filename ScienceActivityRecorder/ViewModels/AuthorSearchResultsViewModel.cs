@@ -7,7 +7,7 @@ namespace ScienceActivityRecorder.ViewModels
     {
         public IEnumerable<AuthorSearchResult> Authors { get; set; }
 
-        public PublicationActivityInfo PublicationActivityInfo { get; set; }
+        public PublicationActivity PublicationActivity { get; set; }
 
         public bool IsNum1 { get; set; }
 

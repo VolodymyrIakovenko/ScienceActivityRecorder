@@ -7,6 +7,6 @@ namespace ScienceActivityRecorder.ViewModels
     {
         public OperationResult OperationResult { get; set; }
 
-        public ProfessionalActivityInfo ProfessionalActivityInfo { get; set; }
+        public ProfessionalActivity ProfessionalActivity { get; set; }
     }
 }

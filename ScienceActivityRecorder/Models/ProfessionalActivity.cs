@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
-    public class ProfessionalActivityInfo
+    public class ProfessionalActivity
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }

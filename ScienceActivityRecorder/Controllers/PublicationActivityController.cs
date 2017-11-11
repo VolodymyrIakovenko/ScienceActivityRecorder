@@ -19,7 +19,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             var viewModel = new PublicationActivityIndexViewModel
             {
-                PublicationActivityInfo = ScientistProfileProvider.IakovenkoOE.PublicationActivityInfo
+                PublicationActivity = ScientistProfileProvider.IakovenkoOE.PublicationActivityInfo
             };
 
             return View(viewModel);
@@ -31,7 +31,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             var viewModel = new PublicationActivityIndexViewModel
             {
-                PublicationActivityInfo = authorViewModel.PublicationActivityInfo,
+                PublicationActivity = authorViewModel.PublicationActivity,
             };
 
             return View("Index", viewModel);
@@ -64,7 +64,7 @@ namespace ScienceActivityRecorder.Controllers
                     NameSurname = string.Format("{0} {1}", ScientistProfileProvider.IakovenkoOE.PersonalInfo.FirstName, ScientistProfileProvider.IakovenkoOE.PersonalInfo.LastName),
                     NumberOfRecords = 10
                 },
-                PublicationActivityInfo = publicationViewModel.PublicationActivityInfo,
+                PublicationActivity = publicationViewModel.PublicationActivity,
                 IsNum1 = isNum1,
                 IsNum2 = isNum2
             };
@@ -117,7 +117,7 @@ namespace ScienceActivityRecorder.Controllers
             return View("AuthorSearchResults", new AuthorSearchResultsViewModel
             {
                 Authors = orderedProfiles,
-                PublicationActivityInfo = viewModel.PublicationActivityInfo,
+                PublicationActivity = viewModel.PublicationActivity,
                 IsNum1 = viewModel.IsNum1,
                 IsNum2 = viewModel.IsNum2
             });

@@ -4,11 +4,11 @@ namespace ScienceActivityRecorder.Providers
 {
     public class ProfessionalActivityProvider
     {
-        public static ProfessionalActivityInfo IakovenkoOE
+        public static ProfessionalActivity IakovenkoOE
         {
             get
             {
-                var professionalActivityInfo = new ProfessionalActivityInfo
+                var professionalActivityInfo = new ProfessionalActivity
                 {
                     Id = 1,
                     Num4ScientificManagement = "num4",

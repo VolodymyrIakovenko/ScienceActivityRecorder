@@ -12,7 +12,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             var viewModel = new AdditionalActivityIndexViewModel
             {
-                AdditionalActivityInfo = ScientistProfileProvider.IakovenkoOE.AdditionalActivityInfo
+                AdditionalActivity = ScientistProfileProvider.IakovenkoOE.AdditionalActivityInfo
             };
 
             return View(viewModel);

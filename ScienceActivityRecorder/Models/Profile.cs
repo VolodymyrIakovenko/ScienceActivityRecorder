@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
-    public class PersonalInfo
+    public class Profile
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -45,10 +45,10 @@ namespace ScienceActivityRecorder.Models
         [Display(Name = "Домашня адреса, телефон")]
         public string HomeAddress { get; set; }
 
-        public List<PublicationActivityInfo> PublicationActivityInfo { get; set; }
+        public List<PublicationActivity> PublicationActivity { get; set; }
 
-        public List<ProfessionalActivityInfo> ProfessionalActivityInfo { get; set; }
+        public List<ProfessionalActivity> ProfessionalActivity { get; set; }
 
-        public List<AdditionalActivityInfo> AdditionalActivityInfo { get; set; }
+        public List<AdditionalActivity> AdditionalActivity { get; set; }
     }
 }

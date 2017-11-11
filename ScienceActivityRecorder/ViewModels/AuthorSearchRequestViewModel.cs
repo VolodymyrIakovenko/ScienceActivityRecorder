@@ -10,7 +10,7 @@ namespace ScienceActivityRecorder.ViewModels
 
         public List<Organization> PredefinedOrganizations { get { return OrganizationProvider.PredefinedOrganizations; } }
 
-        public PublicationActivityInfo PublicationActivityInfo { get; set; }
+        public PublicationActivity PublicationActivity { get; set; }
 
         public bool IsNum1 { get; set; }
 

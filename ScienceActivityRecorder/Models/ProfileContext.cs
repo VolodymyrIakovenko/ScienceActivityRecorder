@@ -7,13 +7,15 @@ namespace ScienceActivityRecorder.Models
         public ProfileContext(DbContextOptions<ProfileContext> options)
             : base(options)
         { }
-        
-        public DbSet<PersonalInfo> PersonalInfo { get; set; }
 
-        public DbSet<PublicationActivityInfo> PublicationActivityInfo { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
 
-        public DbSet<ProfessionalActivityInfo> ProfessionalActivityInfo { get; set; }
+        public DbSet<Profile> PersonalInfo { get; set; }
 
-        public DbSet<AdditionalActivityInfo> AdditionalActivityInfo { get; set; }
+        public DbSet<PublicationActivity> PublicationActivityInfo { get; set; }
+
+        public DbSet<ProfessionalActivity> ProfessionalActivityInfo { get; set; }
+
+        public DbSet<AdditionalActivity> AdditionalActivityInfo { get; set; }
     }
 }

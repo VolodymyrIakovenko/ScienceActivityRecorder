@@ -4,11 +4,11 @@ namespace ScienceActivityRecorder.Providers
 {
     public class PublicationActivityInfoProvider
     {
-        public static PublicationActivityInfo IakovenkoOE
+        public static PublicationActivity IakovenkoOE
         {
             get
             {
-                var publicationActivityInfo = new PublicationActivityInfo
+                var publicationActivityInfo = new PublicationActivity
                 {
                     Id = 1,
                     Num1PublicationsInScienceMetricDatabases = "num1",

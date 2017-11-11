@@ -11,16 +11,17 @@ using System;
 namespace ScienceActivityRecorder.Migrations
 {
     [DbContext(typeof(ProfileContext))]
-    partial class ProfileContextModelSnapshot : ModelSnapshot
+    [Migration("20171111202058_DependenciesChange")]
+    partial class DependenciesChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.AdditionalActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.AdditionalActivityInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -46,7 +47,39 @@ namespace ScienceActivityRecorder.Migrations
                     b.ToTable("AdditionalActivityInfo");
                 });
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.ProfessionalActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.PersonalInfo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AcademicDisciplines");
+
+                    b.Property<string>("AdvancedTraining");
+
+                    b.Property<DateTime>("BirthDate");
+
+                    b.Property<string>("Degree");
+
+                    b.Property<string>("EducationalInstitution");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("HomeAddress");
+
+                    b.Property<string>("LastName");
+
+                    b.Property<string>("MiddleName");
+
+                    b.Property<string>("Position");
+
+                    b.Property<string>("Seniority");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PersonalInfo");
+                });
+
+            modelBuilder.Entity("ScienceActivityRecorder.Models.ProfessionalActivityInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -95,34 +128,16 @@ namespace ScienceActivityRecorder.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AcademicDisciplines");
-
-                    b.Property<string>("AdvancedTraining");
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<string>("Degree");
-
-                    b.Property<string>("EducationalInstitution");
-
-                    b.Property<string>("FirstName");
-
-                    b.Property<string>("HomeAddress");
-
-                    b.Property<string>("LastName");
-
-                    b.Property<string>("MiddleName");
-
-                    b.Property<string>("Position");
-
-                    b.Property<string>("Seniority");
+                    b.Property<int?>("PersonalInfoId");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Profile");
+                    b.HasIndex("PersonalInfoId");
+
+                    b.ToTable("Profiles");
                 });
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.PublicationActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.PublicationActivityInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -148,24 +163,31 @@ namespace ScienceActivityRecorder.Migrations
                     b.ToTable("PublicationActivityInfo");
                 });
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.AdditionalActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.AdditionalActivityInfo", b =>
                 {
                     b.HasOne("ScienceActivityRecorder.Models.Profile")
-                        .WithMany("AdditionalActivity")
+                        .WithMany("AdditionalActivityInfo")
                         .HasForeignKey("ProfileId");
                 });
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.ProfessionalActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.ProfessionalActivityInfo", b =>
                 {
                     b.HasOne("ScienceActivityRecorder.Models.Profile")
-                        .WithMany("ProfessionalActivity")
+                        .WithMany("ProfessionalActivityInfo")
                         .HasForeignKey("ProfileId");
                 });
 
-            modelBuilder.Entity("ScienceActivityRecorder.Models.PublicationActivity", b =>
+            modelBuilder.Entity("ScienceActivityRecorder.Models.Profile", b =>
+                {
+                    b.HasOne("ScienceActivityRecorder.Models.PersonalInfo", "PersonalInfo")
+                        .WithMany()
+                        .HasForeignKey("PersonalInfoId");
+                });
+
+            modelBuilder.Entity("ScienceActivityRecorder.Models.PublicationActivityInfo", b =>
                 {
                     b.HasOne("ScienceActivityRecorder.Models.Profile")
-                        .WithMany("PublicationActivity")
+                        .WithMany("PublicationActivityInfo")
                         .HasForeignKey("ProfileId");
                 });
 #pragma warning restore 612, 618
