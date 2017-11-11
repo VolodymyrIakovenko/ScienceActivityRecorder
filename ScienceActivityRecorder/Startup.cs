@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using ScienceActivityRecorder.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScienceActivityRecorder
 {
@@ -22,6 +24,9 @@ namespace ScienceActivityRecorder
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ScienceActivity;Integrated Security=True;Connect Timeout=30;";
+            services.AddDbContext<ProfileContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

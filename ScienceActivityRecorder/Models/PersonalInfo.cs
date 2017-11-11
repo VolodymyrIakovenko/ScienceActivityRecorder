@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
 {
     public class PersonalInfo
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
         [Display(Name = "Прізвище")]
         public string LastName { get; set; }
 
@@ -39,5 +44,11 @@ namespace ScienceActivityRecorder.Models
 
         [Display(Name = "Домашня адреса, телефон")]
         public string HomeAddress { get; set; }
+
+        public List<PublicationActivityInfo> PublicationActivityInfo { get; set; }
+
+        public List<ProfessionalActivityInfo> ProfessionalActivityInfo { get; set; }
+
+        public List<AdditionalActivityInfo> AdditionalActivityInfo { get; set; }
     }
 }

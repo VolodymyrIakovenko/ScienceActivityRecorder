@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
@@ -7,6 +8,8 @@ namespace ScienceActivityRecorder.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        public DateTime LastFillDate { get; set; }
 
         [Display(Name = "Участь у профорієнтаційній роботі та довузовській підготовці молоді")]
         public string Num20VocationalGuidenceWork { get; set; }

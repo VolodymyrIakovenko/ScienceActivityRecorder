@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScienceActivityRecorder.Models
@@ -7,6 +8,8 @@ namespace ScienceActivityRecorder.Models
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
+        public DateTime LastFillDate { get; set; }
 
         [Display(Name = "Наявність наукової публікації у періодичному виданні, яке включено до наукометричних баз, зокрема Scopus або Web of Science Core Collection, рекомендованих МОН")]
         public string Num1PublicationsInScienceMetricDatabases { get; set; }
@@ -21,6 +24,6 @@ namespace ScienceActivityRecorder.Models
         public string Num14TeachingManualsAvailibility { get; set; }
 
         [Display(Name = "Наявність науково-популярних та/або консультаційних (дорадчих) та/або дискусійних публікацій з наукової або професійної тематики загальною кількістю три публікації")]
-        public string Num18PopularSciencePublicationsAvailibility { get; set; }
+        public string Num18PopularSciencePublicationsAvailibility { get; set; }        
     }
 }
