@@ -7,6 +7,7 @@
 <form asp-controller="PublicationActivity" asp-action="IndexWithAuthorSearchResults" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
 
     <input type="hidden" asp-for="PublicationActivity.Id" value="@Model.PublicationActivity.Id" />
+    <input type="hidden" asp-for="PublicationActivity.LastFillDate" value="@Model.PublicationActivity.LastFillDate" />
     <input type="hidden" asp-for="PublicationActivity.Num3TextbookAvailability" value="@Model.PublicationActivity.Num3TextbookAvailability" />
     <input type="hidden" asp-for="PublicationActivity.Num14TeachingManualsAvailibility" value="@Model.PublicationActivity.Num14TeachingManualsAvailibility" />
     <input type="hidden" asp-for="PublicationActivity.Num18PopularSciencePublicationsAvailibility" value="@Model.PublicationActivity.Num18PopularSciencePublicationsAvailibility" />

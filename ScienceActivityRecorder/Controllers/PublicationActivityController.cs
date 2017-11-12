@@ -5,6 +5,7 @@ using ScienceActivityRecorder.LatentSemanticAnalysis;
 using ScienceActivityRecorder.LatentSemanticAnalysis.DataObjects;
 using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
+using ScienceActivityRecorder.Repositories;
 using ScienceActivityRecorder.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,22 @@ namespace ScienceActivityRecorder.Controllers
 {
     public class PublicationActivityController : Controller
     {
+        private readonly IProfilesRepository _profilesRepository;
+
+        public PublicationActivityController(IProfilesRepository profilesRepository)
+        {
+            _profilesRepository = profilesRepository;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
+            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+            var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.LastFillDate == ScientistProfileProvider.NextLastFillDate);
+
             var viewModel = new PublicationActivityIndexViewModel
             {
-                PublicationActivity = ScientistProfileProvider.IakovenkoOE.PublicationActivityInfo
+                PublicationActivity = publicationActivity
             };
 
             return View(viewModel);
@@ -47,7 +58,20 @@ namespace ScienceActivityRecorder.Controllers
             }
             else
             {
-                viewModel.OperationResult = OperationResult.Success;
+                var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+                var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.Id == viewModel.PublicationActivity.Id);
+                if (publicationActivity == null)
+                {
+                    viewModel.OperationResult = OperationResult.Error;
+                }
+                else
+                {
+                    var index = profile.PublicationActivity.IndexOf(publicationActivity);
+                    profile.PublicationActivity[index] = viewModel.PublicationActivity;
+                    _profilesRepository.UpdateProfile(profile);
+
+                    viewModel.OperationResult = OperationResult.Success;
+                }
             }
 
             return View(viewModel);
@@ -57,11 +81,13 @@ namespace ScienceActivityRecorder.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AuthorSearchWithPublicationParameters(PublicationActivityIndexViewModel publicationViewModel, bool isNum1, bool isNum2)
         {
+            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+
             var viewModel = new AuthorSearchRequestViewModel
             {
                 AuthorSearchRequest = new AuthorSearchRequest
                 {
-                    NameSurname = string.Format("{0} {1}", ScientistProfileProvider.IakovenkoOE.PersonalInfo.FirstName, ScientistProfileProvider.IakovenkoOE.PersonalInfo.LastName),
+                    NameSurname = string.Format("{0} {1}", profile.FirstName, profile.LastName),
                     NumberOfRecords = 10
                 },
                 PublicationActivity = publicationViewModel.PublicationActivity,

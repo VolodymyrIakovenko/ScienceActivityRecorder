@@ -1,22 +1,22 @@
-﻿using ScienceActivityRecorder.Models;
+﻿using System;
 
 namespace ScienceActivityRecorder.Providers
 {
     public class ScientistProfileProvider
     {
-        public static ScientistProfile IakovenkoOE
+        public static int Index
         {
             get
             {
-                var profile = new ScientistProfile
-                {
-                    PersonalInfo = PersonalInfoProvider.IakovenkoOE,
-                    PublicationActivityInfo = PublicationActivityInfoProvider.IakovenkoOE,
-                    ProfessionalActivityInfo = ProfessionalActivityProvider.IakovenkoOE,
-                    AdditionalActivityInfo = AdditionalActivityInfoProvider.IakovenkoOE
-                };
+                return 1;
+            }
+        }
 
-                return profile;
+        public static DateTime NextLastFillDate
+        {
+            get
+            {
+                return new DateTime(2017, 12, 31);
             }
         }
     }

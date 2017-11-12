@@ -1,18 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
 using ScienceActivityRecorder.Providers;
+using ScienceActivityRecorder.Repositories;
 using ScienceActivityRecorder.ViewModels;
+using System.Linq;
 
 namespace ScienceActivityRecorder.Controllers
 {
     public class ProfessionalActivityController : Controller
     {
+        private readonly IProfilesRepository _profilesRepository;
+
+        public ProfessionalActivityController(IProfilesRepository profilesRepository)
+        {
+            _profilesRepository = profilesRepository;
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
+            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+            var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.LastFillDate == ScientistProfileProvider.NextLastFillDate);
+
             var viewModel = new ProfessionalActivityIndexViewModel
             {
-                ProfessionalActivity = ScientistProfileProvider.IakovenkoOE.ProfessionalActivityInfo
+                ProfessionalActivity = professionalActivity
             };
 
             return View(viewModel);
@@ -28,7 +40,20 @@ namespace ScienceActivityRecorder.Controllers
             }
             else
             {
-                viewModel.OperationResult = OperationResult.Success;
+                var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+                var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.Id == viewModel.ProfessionalActivity.Id);
+                if (professionalActivity == null)
+                {
+                    viewModel.OperationResult = OperationResult.Error;
+                }
+                else
+                {
+                    var index = profile.ProfessionalActivity.IndexOf(professionalActivity);
+                    profile.ProfessionalActivity[index] = viewModel.ProfessionalActivity;
+                    _profilesRepository.UpdateProfile(profile);
+
+                    viewModel.OperationResult = OperationResult.Success;
+                }
             }
             
             return View(viewModel);
