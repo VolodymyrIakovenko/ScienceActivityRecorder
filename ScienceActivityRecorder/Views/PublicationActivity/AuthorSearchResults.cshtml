@@ -6,22 +6,22 @@
 
 <form asp-controller="PublicationActivity" asp-action="IndexWithAuthorSearchResults" class="form-horizontal" style="padding-bottom: 20px" asp-antiforgery="true">
 
-    <input type="hidden" asp-for="PublicationActivityInfo.Id" value="@Model.PublicationActivityInfo.Id" />
-    <input type="hidden" asp-for="PublicationActivityInfo.Num3TextbookAvailability" value="@Model.PublicationActivityInfo.Num3TextbookAvailability" />
-    <input type="hidden" asp-for="PublicationActivityInfo.Num14TeachingManualsAvailibility" value="@Model.PublicationActivityInfo.Num14TeachingManualsAvailibility" />
-    <input type="hidden" asp-for="PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" value="@Model.PublicationActivityInfo.Num18PopularSciencePublicationsAvailibility" />
+    <input type="hidden" asp-for="PublicationActivity.Id" value="@Model.PublicationActivity.Id" />
+    <input type="hidden" asp-for="PublicationActivity.Num3TextbookAvailability" value="@Model.PublicationActivity.Num3TextbookAvailability" />
+    <input type="hidden" asp-for="PublicationActivity.Num14TeachingManualsAvailibility" value="@Model.PublicationActivity.Num14TeachingManualsAvailibility" />
+    <input type="hidden" asp-for="PublicationActivity.Num18PopularSciencePublicationsAvailibility" value="@Model.PublicationActivity.Num18PopularSciencePublicationsAvailibility" />
 
     <div id="outputNum1Container" class="form-group row" style="@(Model.IsNum1 ? "display:block" : "display:none")">
         <div class="col-md-12">
-            <label asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" postfix-text=":"></label>
-            <textarea id="outputNum1" asp-for="PublicationActivityInfo.Num1PublicationsInScienceMetricDatabases" rows="5" class="form-control"></textarea>
+            <label asp-for="PublicationActivity.Num1PublicationsInScienceMetricDatabases" postfix-text=":"></label>
+            <textarea id="outputNum1" asp-for="PublicationActivity.Num1PublicationsInScienceMetricDatabases" rows="5" class="form-control"></textarea>
         </div>
     </div>
 
     <div id="outputNum2Container" class="form-group row" style="@(Model.IsNum2 ? "display:block" : "display:none")">
         <div class="col-md-12">
-            <label asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" postfix-text=":"></label>
-            <textarea id="outputNum2" asp-for="PublicationActivityInfo.Num2PublicationsInUkrainianDatabases" rows="5" class="form-control"></textarea>
+            <label asp-for="PublicationActivity.Num2PublicationsInUkrainianDatabases" postfix-text=":"></label>
+            <textarea id="outputNum2" asp-for="PublicationActivity.Num2PublicationsInUkrainianDatabases" rows="5" class="form-control"></textarea>
         </div>
     </div>
 
