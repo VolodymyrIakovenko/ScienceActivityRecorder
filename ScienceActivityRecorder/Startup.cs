@@ -5,6 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ScienceActivityRecorder.Models;
 using Microsoft.EntityFrameworkCore;
 using ScienceActivityRecorder.Repositories;
+using System;
+using Microsoft.AspNetCore.Identity;
+using ScienceActivityRecorder.Configuration;
 
 namespace ScienceActivityRecorder
 {
@@ -25,6 +28,37 @@ namespace ScienceActivityRecorder
             var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ScienceActivity;Integrated Security=True;Connect Timeout=30;";
             services.AddDbContext<ProfileContext>(options => options.UseSqlServer(connection));
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ProfileContext>()
+                .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                // Password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.LoginPath = "/Account/Login"; // If the LoginPath is not set here, ASP.NET Core will default to /Account/Login
+                options.LogoutPath = "/Account/Logout"; // If the LogoutPath is not set here, ASP.NET Core will default to /Account/Logout
+                options.AccessDeniedPath = "/Account/AccessDenied"; // If the AccessDeniedPath is not set here, ASP.NET Core will default to /Account/AccessDenied
+                options.SlidingExpiration = true;
+            });
+
             services.AddScoped<IProfilesRepository, ProfilesRepository>();
         }
 
@@ -43,12 +77,26 @@ namespace ScienceActivityRecorder
 
             app.UseStaticFiles();
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            IServiceScopeFactory scopeFactory = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>();
+
+            using (IServiceScope scope = scopeFactory.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                UsersSeed.Seed(userManager).Wait();
+                RolesSeed.Seed(roleManager).Wait();
+                UserRolesSeed.Seed(userManager).Wait();
+            }
         }
     }
 }
