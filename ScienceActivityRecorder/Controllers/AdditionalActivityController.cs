@@ -4,9 +4,11 @@ using ScienceActivityRecorder.Enums;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScienceActivityRecorder.Controllers
 {
+    [Authorize]
     public class AdditionalActivityController : Controller
     {
         private readonly IProfilesRepository _profilesRepository;

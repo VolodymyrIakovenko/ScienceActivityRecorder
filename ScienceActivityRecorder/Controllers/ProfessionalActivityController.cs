@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
@@ -7,6 +8,7 @@ using System.Linq;
 
 namespace ScienceActivityRecorder.Controllers
 {
+    [Authorize]
     public class ProfessionalActivityController : Controller
     {
         private readonly IProfilesRepository _profilesRepository;

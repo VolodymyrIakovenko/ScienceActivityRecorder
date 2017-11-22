@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
 using ScienceActivityRecorder.GoogleScholarSearch;
 using ScienceActivityRecorder.LatentSemanticAnalysis;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ScienceActivityRecorder.Controllers
 {
+    [Authorize]
     public class PublicationActivityController : Controller
     {
         private readonly IProfilesRepository _profilesRepository;

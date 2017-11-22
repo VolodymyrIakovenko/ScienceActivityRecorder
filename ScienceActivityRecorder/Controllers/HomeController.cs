@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 
 namespace ScienceActivityRecorder.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IProfilesRepository _profilesRepository;

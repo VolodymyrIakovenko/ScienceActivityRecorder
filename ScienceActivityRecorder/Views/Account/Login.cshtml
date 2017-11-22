@@ -1,0 +1,76 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вхід до системи</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/login.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+    </environment>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <h1 class="text-center login-title">Вхід до профайлу науковця</h1>
+                <div class="account-wall">
+
+                    <form asp-controller="Account" asp-action="Login" class="form-signin">
+
+                        <input asp-for="Login.Name" type="text" class="form-control" placeholder="Логін" required autofocus
+                               oninvalid="this.setCustomValidity('Будь-ласка введіть логін')"
+                               oninput="setCustomValidity('')" >
+
+                        <input asp-for="Login.Password" type="password" class="form-control" placeholder="Пароль" required
+                               oninvalid="this.setCustomValidity('Будь-ласка введіть пароль')"
+                               oninput="setCustomValidity('')">
+
+                        <input class="btn btn-lg btn-primary btn-block" type="submit" value="Вхід" />
+
+                        <label asp-for="Login.RememberMe" class="checkbox">
+                            <input asp-for="Login.RememberMe">
+                            Запам'ятати
+                        </label>
+
+                        <div style="text-align: center; color: red">@Html.ValidationMessage("Generic")</div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
+</body>
+</html>

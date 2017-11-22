@@ -24,6 +24,12 @@ namespace ScienceActivityRecorder.Configuration
                     throw new Exception("Failed to assign a role: " + userLogin + " user wasn't found.");
                 }
 
+                var existingRoles = await userManager.GetRolesAsync(user);
+                if (existingRoles.Contains(userRoles[userLogin]))
+                {
+                    continue;
+                }
+
                 var result = await userManager.AddToRoleAsync(user, userRoles[userLogin]);
                 if (!result.Succeeded)
                 {
