@@ -43,7 +43,7 @@ namespace ScienceActivityRecorder.GoogleScholarSearch
                     var link = node.GetAttributeValue("href", string.Empty);
                     if (link.Contains("/citations?user="))
                     {
-                        profileLinks.Add("https://scholar.google.com" + link);
+                        profileLinks.Add("https://scholar.google.com" + link + "&pagesize=1000");
                     }
                 }
 
@@ -166,6 +166,8 @@ namespace ScienceActivityRecorder.GoogleScholarSearch
                     }
                 }
 
+                var orderedPublications = publications.OrderByDescending(p => p.Year).ToList();
+
                 return new AuthorSearchResult
                 {
                     NameSurname = name,
@@ -173,7 +175,7 @@ namespace ScienceActivityRecorder.GoogleScholarSearch
                     Organization = organizationInProfile,
                     Field = field,
                     Link = link,
-                    Publications = publications
+                    Publications = orderedPublications
                 };
             }
         }
