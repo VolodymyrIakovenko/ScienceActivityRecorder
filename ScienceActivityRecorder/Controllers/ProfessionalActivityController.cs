@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ScienceActivityRecorder.Enums;
+using ScienceActivityRecorder.Models;
 using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 using ScienceActivityRecorder.ViewModels;
@@ -11,18 +12,20 @@ namespace ScienceActivityRecorder.Controllers
     [Authorize]
     public class ProfessionalActivityController : Controller
     {
+        private readonly IProfileProvider _profileProvider;
         private readonly IProfilesRepository _profilesRepository;
 
-        public ProfessionalActivityController(IProfilesRepository profilesRepository)
+        public ProfessionalActivityController(IProfileProvider profileProvider, IProfilesRepository profilesRepository)
         {
+            _profileProvider = profileProvider;
             _profilesRepository = profilesRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
-            var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.LastFillDate == ScientistProfileProvider.NextLastFillDate);
+            var profile = ViewBag.Profile as Profile;
+            var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
 
             var viewModel = new ProfessionalActivityIndexViewModel
             {
@@ -42,7 +45,7 @@ namespace ScienceActivityRecorder.Controllers
             }
             else
             {
-                var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+                var profile = ViewBag.Profile as Profile;
                 var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.Id == viewModel.ProfessionalActivity.Id);
                 if (professionalActivity == null)
                 {

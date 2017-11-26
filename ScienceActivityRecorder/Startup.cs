@@ -8,6 +8,8 @@ using ScienceActivityRecorder.Repositories;
 using System;
 using Microsoft.AspNetCore.Identity;
 using ScienceActivityRecorder.Configuration;
+using ScienceActivityRecorder.Providers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ScienceActivityRecorder
 {
@@ -23,7 +25,10 @@ namespace ScienceActivityRecorder
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new ProfileActionFilter());
+            });
 
             var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ScienceActivity;Integrated Security=True;Connect Timeout=30;";
             services.AddDbContext<ProfileContext>(options => options.UseSqlServer(connection));
@@ -60,6 +65,7 @@ namespace ScienceActivityRecorder
             });
 
             services.AddScoped<IProfilesRepository, ProfilesRepository>();
+            services.AddScoped<IProfileProvider, ProfileProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,10 +96,15 @@ namespace ScienceActivityRecorder
 
             using (IServiceScope scope = scopeFactory.CreateScope())
             {
+                var profilesRepository = scope.ServiceProvider.GetRequiredService<IProfilesRepository>();
+                ProfilesSeed.Seed(profilesRepository);
+
                 var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-                UsersSeed.Seed(userManager).Wait();
+                var usersSeed = new UsersSeed(profilesRepository);
+                usersSeed.Seed(userManager).Wait();
+
                 RolesSeed.Seed(roleManager).Wait();
                 UserRolesSeed.Seed(userManager).Wait();
             }

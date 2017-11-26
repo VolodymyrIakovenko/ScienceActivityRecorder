@@ -17,18 +17,20 @@ namespace ScienceActivityRecorder.Controllers
     [Authorize]
     public class PublicationActivityController : Controller
     {
+        private readonly IProfileProvider _profileProvider;
         private readonly IProfilesRepository _profilesRepository;
 
-        public PublicationActivityController(IProfilesRepository profilesRepository)
+        public PublicationActivityController(IProfileProvider profileProvider, IProfilesRepository profilesRepository)
         {
+            _profileProvider = profileProvider;
             _profilesRepository = profilesRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
-            var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.LastFillDate == ScientistProfileProvider.NextLastFillDate);
+            var profile = ViewBag.Profile as Profile;
+            var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
 
             var viewModel = new PublicationActivityIndexViewModel
             {
@@ -60,7 +62,7 @@ namespace ScienceActivityRecorder.Controllers
             }
             else
             {
-                var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+                var profile = ViewBag.Profile as Profile;
                 var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.Id == viewModel.PublicationActivity.Id);
                 if (publicationActivity == null)
                 {
@@ -83,7 +85,7 @@ namespace ScienceActivityRecorder.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AuthorSearchWithPublicationParameters(PublicationActivityIndexViewModel publicationViewModel, bool isNum1, bool isNum2)
         {
-            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+            var profile = ViewBag.Profile as Profile;
 
             var viewModel = new AuthorSearchRequestViewModel
             {

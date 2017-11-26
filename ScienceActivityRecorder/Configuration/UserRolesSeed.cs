@@ -10,7 +10,9 @@ namespace ScienceActivityRecorder.Configuration
     {
         private static readonly Dictionary<string, string> userRoles = new Dictionary<string, string>
         {
-            { "oleksandr.iakovenko", "Employee" },
+            { "arbuzova.yuliya", "Employee" },
+            { "zhivetc.alla", "Employee" },
+            { "karlova.natalya", "Employee" },
             { "admin", "Admin" },
         };
 

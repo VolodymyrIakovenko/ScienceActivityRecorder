@@ -5,24 +5,28 @@ using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using ScienceActivityRecorder.Models;
 
 namespace ScienceActivityRecorder.Controllers
 {
     [Authorize]
     public class AdditionalActivityController : Controller
     {
+        private readonly IProfileProvider _profileProvider;
         private readonly IProfilesRepository _profilesRepository;
 
-        public AdditionalActivityController(IProfilesRepository profilesRepository)
+        public AdditionalActivityController(IProfileProvider profileProvider, IProfilesRepository profilesRepository)
         {
+            _profileProvider = profileProvider;
             _profilesRepository = profilesRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
-            var additionalActivity = profile.AdditionalActivity.FirstOrDefault(p => p.LastFillDate == ScientistProfileProvider.NextLastFillDate);
+            var profile = ViewBag.Profile as Profile;
+            var additionalActivity = profile.AdditionalActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
 
             var viewModel = new AdditionalActivityIndexViewModel
             {
@@ -42,7 +46,7 @@ namespace ScienceActivityRecorder.Controllers
             }
             else
             {
-                var profile = _profilesRepository.GetProfile(ScientistProfileProvider.Index);
+                var profile = ViewBag.Profile as Profile;
                 var additionalActivity = profile.AdditionalActivity.FirstOrDefault(p => p.Id == viewModel.AdditionalActivity.Id);
                 if (additionalActivity == null)
                 {
