@@ -30,7 +30,7 @@ namespace ScienceActivityRecorder
                 options.Filters.Add(new ProfileActionFilter());
             });
 
-            var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ScienceActivity;Integrated Security=True;Connect Timeout=30;";
+            var connection = @"Data Source=144.76.41.253;Initial Catalog=ScienceActivity;Integrated Security=False;User ID=sa;Password=Server2014;Connect Timeout=30;";
             services.AddDbContext<ProfileContext>(options => options.UseSqlServer(connection));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
