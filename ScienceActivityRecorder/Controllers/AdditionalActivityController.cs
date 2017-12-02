@@ -5,7 +5,6 @@ using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using System.Threading.Tasks;
 using ScienceActivityRecorder.Models;
 
 namespace ScienceActivityRecorder.Controllers
@@ -16,9 +15,8 @@ namespace ScienceActivityRecorder.Controllers
         private readonly IProfileProvider _profileProvider;
         private readonly IProfilesRepository _profilesRepository;
 
-        public AdditionalActivityController(IProfileProvider profileProvider, IProfilesRepository profilesRepository)
+        public AdditionalActivityController(IProfilesRepository profilesRepository)
         {
-            _profileProvider = profileProvider;
             _profilesRepository = profilesRepository;
         }
 

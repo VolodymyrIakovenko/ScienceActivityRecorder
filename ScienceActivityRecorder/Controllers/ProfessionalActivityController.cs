@@ -12,12 +12,10 @@ namespace ScienceActivityRecorder.Controllers
     [Authorize]
     public class ProfessionalActivityController : Controller
     {
-        private readonly IProfileProvider _profileProvider;
         private readonly IProfilesRepository _profilesRepository;
 
-        public ProfessionalActivityController(IProfileProvider profileProvider, IProfilesRepository profilesRepository)
+        public ProfessionalActivityController(IProfilesRepository profilesRepository)
         {
-            _profileProvider = profileProvider;
             _profilesRepository = profilesRepository;
         }
 
