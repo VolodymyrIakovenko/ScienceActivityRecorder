@@ -16,47 +16,116 @@ namespace ScienceActivityRecorder.Controllers
     public class ReportsController : Controller
     {
         private const string GeneratedReportsFolder = "GeneratedReports";
-        private const string TemplatePublicationAndProfessionalActivityDocName = "Template 1-19.docx";
+        private const string TemplateLicenseTermsDocName = "TemplateLicenseTerms.docx";
+        private const string TemplateAdditionalActivityDocName = "TemplateAdditionalActivity.docx";
 
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly string _webRootFolder;
-        private readonly string _templatePath;
+        private readonly string _templateLicenseTermsPath;
+        private readonly string _templateAdditionalActivityPath;
 
         public ReportsController(IHostingEnvironment hostingEnvironment)
         {
             _hostingEnvironment = hostingEnvironment;
 
-            var templateVirtualPath = Path.Combine(GeneratedReportsFolder, TemplatePublicationAndProfessionalActivityDocName);
             _webRootFolder = _hostingEnvironment.WebRootPath;
-            _templatePath = Path.Combine(_webRootFolder, templateVirtualPath);
 
-            // Remove unnecessary keys from xml code in the template.
-            using (var doc = WordprocessingDocument.Open(_templatePath, true))
+            var templateLicenseTermsVirtualPath = Path.Combine(GeneratedReportsFolder, TemplateLicenseTermsDocName);
+            _templateLicenseTermsPath = Path.Combine(_webRootFolder, templateLicenseTermsVirtualPath);
+
+            var templateAdditionalActivityVirtualPath = Path.Combine(GeneratedReportsFolder, TemplateAdditionalActivityDocName);
+            _templateAdditionalActivityPath = Path.Combine(_webRootFolder, templateAdditionalActivityVirtualPath);
+
+            // Remove unnecessary keys from xml code in the templates.
+            var settings = new SimplifyMarkupSettings
             {
-                var settings = new SimplifyMarkupSettings
-                {
-                    RemoveComments = true,
-                    RemoveContentControls = true,
-                    RemoveEndAndFootNotes = true,
-                    RemoveFieldCodes = false,
-                    RemoveLastRenderedPageBreak = true,
-                    RemovePermissions = true,
-                    RemoveProof = true,
-                    RemoveRsidInfo = true,
-                    RemoveSmartTags = true,
-                    RemoveSoftHyphens = true,
-                    ReplaceTabsWithSpaces = true,
-                    RemoveBookmarks = true
-                };
+                RemoveComments = true,
+                RemoveContentControls = true,
+                RemoveEndAndFootNotes = true,
+                RemoveFieldCodes = false,
+                RemoveLastRenderedPageBreak = true,
+                RemovePermissions = true,
+                RemoveProof = true,
+                RemoveRsidInfo = true,
+                RemoveSmartTags = true,
+                RemoveSoftHyphens = true,
+                ReplaceTabsWithSpaces = true,
+                RemoveBookmarks = true
+            };
+
+            using (var doc = WordprocessingDocument.Open(_templateLicenseTermsPath, true))
+            {
+                MarkupSimplifier.SimplifyMarkup(doc, settings);
+            }
+
+            using (var doc = WordprocessingDocument.Open(_templateAdditionalActivityPath, true))
+            {
                 MarkupSimplifier.SimplifyMarkup(doc, settings);
             }
         }
 
-        public IActionResult Generate()
+        public IActionResult GenerateLicenseTerms()
         {
             var profile = ViewBag.Profile as Profile;
+            var replacementStrings = GetReplacementStrings(profile);
+
+            var fileName = profile.LastName + " " + profile.FirstName + " " + profile.MiddleName + " (ліцензійні умови).docx";
+            var virtualPath = Path.Combine(GeneratedReportsFolder, fileName);
+            var file = new FileInfo(Path.Combine(_webRootFolder, virtualPath));
+
+            System.IO.File.Copy(_templateLicenseTermsPath, file.FullName, true);
+            SearchAndReplace(file.FullName, replacementStrings);
+            
+            return File(virtualPath, "application/docx", file.Name);
+        }
+
+        public IActionResult GenerateAdditionalActivity()
+        {
+            var profile = ViewBag.Profile as Profile;
+            var replacementStrings = GetReplacementStrings(profile);
+
+            var fileName = profile.LastName + " " + profile.FirstName + " " + profile.MiddleName + " (додаткова діяльність).docx";
+            var virtualPath = Path.Combine(GeneratedReportsFolder, fileName);
+            var file = new FileInfo(Path.Combine(_webRootFolder, virtualPath));
+
+            System.IO.File.Copy(_templateAdditionalActivityPath, file.FullName, true);
+            SearchAndReplace(file.FullName, replacementStrings);
+
+            return File(virtualPath, "application/docx", file.Name);
+        }
+
+        public IActionResult Visualize()
+        {
+            return View();
+        }
+
+        private static void SearchAndReplace(string document, Dictionary<string, string> replacementStrings)
+        {
+            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(document, true))
+            {
+                string docText = null;
+                using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
+                {
+                    docText = sr.ReadToEnd();
+                }
+
+                foreach (var key in replacementStrings.Keys)
+                {
+                    docText = docText.Replace(key, replacementStrings[key]);
+                }
+
+                using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
+                {
+                    sw.Write(docText);
+                }
+            }
+        }
+
+        private Dictionary<string, string> GetReplacementStrings(Profile profile)
+        {
             var publicationActivity = profile.PublicationActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
             var professionalActivity = profile.ProfessionalActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
+            var additionalActivity = profile.AdditionalActivity.FirstOrDefault(p => p.LastFillDate == ProfileProvider.NextLastFillDate);
 
             var replacementStrings = new Dictionary<string, string>
             {
@@ -85,43 +154,14 @@ namespace ScienceActivityRecorder.Controllers
                 { "!Num17!", professionalActivity.Num17OrganizingSocialActivities ?? string.Empty },
                 { "!Num18!", publicationActivity.Num18PopularSciencePublicationsAvailibility ?? string.Empty },
                 { "!Num19!", professionalActivity.Num19CombinationOfTeachingAndPractice ?? string.Empty },
+                { "!Num20!", additionalActivity.Num20VocationalGuidenceWork ?? string.Empty },
+                { "!Num21!", additionalActivity.Num21ManagementOfCommonWork ?? string.Empty },
+                { "!Num22!", additionalActivity.Num22CreationOfOffices ?? string.Empty },
+                { "!Num23!", additionalActivity.Num23ParticipationInWorkOfBoards ?? string.Empty },
+                { "!Num24!", additionalActivity.Num24NationalAward ?? string.Empty },
             };
 
-            var fileName = profile.LastName + " " + profile.FirstName + " " + profile.MiddleName + ".docx";
-            var virtualPath = Path.Combine(GeneratedReportsFolder, fileName);
-            var file = new FileInfo(Path.Combine(_webRootFolder, virtualPath));
-
-            System.IO.File.Copy(_templatePath, file.FullName, true);
-            SearchAndReplace(file.FullName, replacementStrings);
-            
-            return File(virtualPath, "application/docx", file.Name);
-        }
-
-        public IActionResult Visualize()
-        {
-            return View();
-        }
-
-        public static void SearchAndReplace(string document, Dictionary<string, string> replacementStrings)
-        {
-            using (WordprocessingDocument wordDoc = WordprocessingDocument.Open(document, true))
-            {
-                string docText = null;
-                using (StreamReader sr = new StreamReader(wordDoc.MainDocumentPart.GetStream()))
-                {
-                    docText = sr.ReadToEnd();
-                }
-
-                foreach (var key in replacementStrings.Keys)
-                {
-                    docText = docText.Replace(key, replacementStrings[key]);
-                }
-
-                using (StreamWriter sw = new StreamWriter(wordDoc.MainDocumentPart.GetStream(FileMode.Create)))
-                {
-                    sw.Write(docText);
-                }
-            }
+            return replacementStrings;
         }
     }
 }
