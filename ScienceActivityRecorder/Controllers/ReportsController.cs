@@ -16,7 +16,7 @@ namespace ScienceActivityRecorder.Controllers
     public class ReportsController : Controller
     {
         private const string GeneratedReportsFolder = "GeneratedReports";
-        private const string TemplateDocName = "Template.docx";
+        private const string TemplatePublicationAndProfessionalActivityDocName = "Template 1-19.docx";
 
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly string _webRootFolder;
@@ -26,7 +26,7 @@ namespace ScienceActivityRecorder.Controllers
         {
             _hostingEnvironment = hostingEnvironment;
 
-            var templateVirtualPath = Path.Combine(GeneratedReportsFolder, "Template.docx");
+            var templateVirtualPath = Path.Combine(GeneratedReportsFolder, TemplatePublicationAndProfessionalActivityDocName);
             _webRootFolder = _hostingEnvironment.WebRootPath;
             _templatePath = Path.Combine(_webRootFolder, templateVirtualPath);
 
@@ -63,7 +63,9 @@ namespace ScienceActivityRecorder.Controllers
                 { "!LastName!", profile.LastName ?? string.Empty },
                 { "!FirstName!", profile.FirstName ?? string.Empty },
                 { "!MiddleName!", profile.MiddleName ?? string.Empty },
-                { "!SignatureName!", profile.LastName ?? string.Empty },
+                { "!SignatureName!", (profile.LastName ?? profile.LastName) + " " + (profile.FirstName == null ? string.Empty : profile.FirstName[0].ToString()) + "." + (profile.MiddleName == null ? string.Empty : profile.MiddleName[0].ToString()) + "." },
+                { "!StartDate!", ProfileProvider.NextLastFillDate.AddMonths(-6).ToString("dd.MM.yyyy") },
+                { "!EndDate!", ProfileProvider.NextLastFillDate.ToString("dd.MM.yyyy") },
                 { "!Num1!", publicationActivity.Num1PublicationsInScienceMetricDatabases ?? string.Empty },
                 { "!Num2!", publicationActivity.Num2PublicationsInUkrainianDatabases ?? string.Empty },
                 { "!Num3!", publicationActivity.Num3TextbookAvailability ?? string.Empty },

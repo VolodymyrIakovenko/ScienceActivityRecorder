@@ -3,7 +3,7 @@
 
         <div class="navbar-header">
             <a class="navbar-brand" href="#">@((ViewBag.Profile != null) ?
-                    (ViewBag.Profile.LastName + " " + (ViewBag.Profile.FirstName == null ? string.Empty : ViewBag.Profile.FirstName[0].ToString()) + ". " + (ViewBag.Profile.MiddleName == null ? string.Empty : ViewBag.Profile.MiddleName[0].ToString()) + ".") :
+                    (ViewBag.Profile.LastName + " " + (ViewBag.Profile.FirstName == null ? string.Empty : ViewBag.Profile.FirstName[0].ToString()) + "." + (ViewBag.Profile.MiddleName == null ? string.Empty : ViewBag.Profile.MiddleName[0].ToString()) + ".") :
                     string.Empty)</a>
         </div>
 
