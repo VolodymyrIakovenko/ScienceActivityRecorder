@@ -58,81 +58,89 @@ namespace ScienceActivityRecorder.Configuration
             var yakovenkoOEProfile = existingProfiles.FirstOrDefault(p => p.LastName == "Яковенко" && p.FirstName == "Олександр" && p.MiddleName == "Євгенович");
             var yakovenkoOEId = yakovenkoOEProfile == null ? 0 : yakovenkoOEProfile.Id;
 
+            var gogunskyProfile = existingProfiles.FirstOrDefault(p => p.LastName == "Гогунський" && p.FirstName == "Віктор" && p.MiddleName == "Дмитрович");
+            var gogunskyId = gogunskyProfile == null ? 0 : gogunskyProfile.Id;
+
             _users = new Dictionary<ApplicationUser, string>
             {
                 {
                     new ApplicationUser { UserName = "arbuzova.yuliya", ProfileId = arbuzovaId },
-                    "Abc1234%"
+                    "FE7A8dUD"
                 },
 
                 {
                     new ApplicationUser { UserName = "zhivetc.alla", ProfileId = zhivetcId },
-                    "Abc1234%"
+                    "gXkRJ8rE"
                 },
 
                 {
                     new ApplicationUser { UserName = "karlova.natalya", ProfileId = karlovaId },
-                    "Abc1234%"
+                    "nE3kcQbx"
                 },
 
                 {
                     new ApplicationUser { UserName = "komlichenko.oksana", ProfileId = komlichenkoId },
-                    "Abc1234%"
+                    "JB3c5dEg"
                 },
 
                 {
                     new ApplicationUser { UserName = "narozhnyi.oleksandr", ProfileId = narozhnyiId },
-                    "Abc1234%"
+                    "jadCup5r"
                 },
 
                 {
                     new ApplicationUser { UserName = "nosov.pavlo", ProfileId = nosovId },
-                    "Abc1234%"
+                    "sJW4xvdL"
                 },
 
                 {
                     new ApplicationUser { UserName = "rotan.natalya", ProfileId = rotanId },
-                    "Abc1234%"
+                    "fKQD2pr3"
                 },
 
                 {
                     new ApplicationUser { UserName = "savenok.lyudmila", ProfileId = savenokId },
-                    "Abc1234%"
+                    "BDqCxU4P"
                 },
 
                 {
                     new ApplicationUser { UserName = "safonova.hanna", ProfileId = safonovaId },
-                    "Abc1234%"
+                    "p8syBRqX"
                 },
 
                 {
                     new ApplicationUser { UserName = "safonov.myhailo", ProfileId = safonovId },
-                    "Abc1234%"
+                    "Npw7cnGf"
                 },
 
                 {
                     new ApplicationUser { UserName = "semakova.tetiana", ProfileId = semakovaId },
-                    "Abc1234%"
+                    "PZ3B7dx4"
                 },
 
                 {
                     new ApplicationUser { UserName = "yakovenko.vira", ProfileId = yakovenkoVDId },
-                    "Abc1234%"
+                    "K6UTezsL"
                 },
 
                 {
                     new ApplicationUser { UserName = "yakovenko.evhen", ProfileId = yakovenkoEOId },
-                    "Abc1234%"
+                    "BUs5gFP3"
                 },
 
                 {
                     new ApplicationUser { UserName = "yakovenko.oleksandr", ProfileId = yakovenkoOEId },
-                    "Abc1234%"
+                    "rVjC2dpD"
+                },
+
+                {
+                    new ApplicationUser { UserName = "gogunsky.viktor", ProfileId = gogunskyId },
+                    "rF3e6tmB"
                 },
 
                 {
                     new ApplicationUser { UserName = "admin", ProfileId = 0 },
-                    "Abc1234%"
+                    "n8CYQBbg"
                 }
             };
         }
@@ -141,7 +149,8 @@ namespace ScienceActivityRecorder.Configuration
         {
             foreach (var appUser in _users.Keys)
             {
-                if (await userManager.FindByNameAsync(appUser.UserName) == null)
+                var user = await userManager.FindByNameAsync(appUser.UserName);
+                if (user == null)
                 {
                     var result = await userManager.CreateAsync(appUser, _users[appUser]);
                     if (!result.Succeeded)
@@ -149,7 +158,7 @@ namespace ScienceActivityRecorder.Configuration
                         var exceptionText = "Failed to create a user: ";
                         foreach (var item in result.Errors)
                         {
-                            exceptionText += item.Description + "; ";                            
+                            exceptionText += item.Description + "; ";
                         }
 
                         throw new Exception(exceptionText);

@@ -12,7 +12,7 @@ namespace ScienceActivityRecorder.GoogleScholarSearch
 {
     public class PageParser
     {
-        private static string AuthorSearch = "https://scholar.google.com/citations?view_op=search_authors&mauthors=\"{0}\"&hl=en";
+        private static string AuthorSearch = "https://scholar.google.com/citations?view_op=search_authors&mauthors={0}&hl=en";
 
         private static List<string> ProfilesToIgnoreWithWords = new List<string>() { "Кафедра", "Журнал" };
 

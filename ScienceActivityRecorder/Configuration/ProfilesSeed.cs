@@ -1,4 +1,5 @@
 ﻿using ScienceActivityRecorder.Models;
+using ScienceActivityRecorder.Providers;
 using ScienceActivityRecorder.Repositories;
 using System;
 using System.Collections.Generic;
@@ -218,6 +219,21 @@ namespace ScienceActivityRecorder.Configuration
                 Seniority = "30",
                 HomeAddress = "м.Херсон, вул. Небесної сотні (40 років Жовтня), буд. 23-а, к. 35-41, (0552) 39-78-41"
             },
+
+            new Profile
+            {
+                LastName = "Гогунський",
+                FirstName = "Віктор",
+                MiddleName = "Дмитрович",
+                BirthDate = new DateTime(2017, 1, 1),
+                Position = "",
+                Degree = "",
+                EducationalInstitution = "",
+                AcademicDisciplines = "",
+                AdvancedTraining = "",
+                Seniority = "",
+                HomeAddress = ""
+            },
         };
 
         public static void Seed(IProfilesRepository profilesRepository)
@@ -227,13 +243,13 @@ namespace ScienceActivityRecorder.Configuration
             foreach (var profile in profiles)
             {
                 profile.PublicationActivity = new List<PublicationActivity>();
-                profile.PublicationActivity.Add(new PublicationActivity { LastFillDate = new DateTime(2017, 12, 31) });
+                profile.PublicationActivity.Add(new PublicationActivity { LastFillDate = ProfileProvider.NextLastFillDate });
 
                 profile.ProfessionalActivity = new List<ProfessionalActivity>();
-                profile.ProfessionalActivity.Add(new ProfessionalActivity { LastFillDate = new DateTime(2017, 12, 31) });
+                profile.ProfessionalActivity.Add(new ProfessionalActivity { LastFillDate = ProfileProvider.NextLastFillDate });
 
                 profile.AdditionalActivity = new List<AdditionalActivity>();
-                profile.AdditionalActivity.Add(new AdditionalActivity { LastFillDate = new DateTime(2017, 12, 31) });
+                profile.AdditionalActivity.Add(new AdditionalActivity { LastFillDate = ProfileProvider.NextLastFillDate });
 
                 var exists = false;
                 foreach (var existingProfile in existingProfiles)

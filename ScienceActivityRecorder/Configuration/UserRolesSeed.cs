@@ -13,6 +13,18 @@ namespace ScienceActivityRecorder.Configuration
             { "arbuzova.yuliya", "Employee" },
             { "zhivetc.alla", "Employee" },
             { "karlova.natalya", "Employee" },
+            { "komlichenko.oksana", "Employee" },
+            { "narozhnyi.oleksandr", "Employee" },
+            { "nosov.pavlo", "Employee" },
+            { "rotan.natalya", "Employee" },
+            { "savenok.lyudmila", "Employee" },
+            { "safonova.hanna", "Employee" },
+            { "safonov.myhailo", "Employee" },
+            { "semakova.tetiana", "Employee" },
+            { "yakovenko.vira", "Employee" },
+            { "yakovenko.evhen", "Employee" },
+            { "yakovenko.oleksandr", "Employee" },
+            { "gogunsky.viktor", "Employee" },
             { "admin", "Admin" },
         };
 

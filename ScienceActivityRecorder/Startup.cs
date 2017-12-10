@@ -30,7 +30,7 @@ namespace ScienceActivityRecorder
             });
 
             // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! REFERENCE TO THE REAL DATABASE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //var connection = @"Data Source=144.76.41.253;Initial Catalog=ScienceActivity;Integrated Security=False;User ID=sa;Password=Server2014;Connect Timeout=30;";
+            //var connection = @"Data Source=localhost;Initial Catalog=ScienceActivity;Integrated Security=False;User ID=sa;Password=Server2014;Connect Timeout=30;";
 
             var connection = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ScienceActivity;Integrated Security=True;Connect Timeout=30;";
             services.AddDbContext<ProfileContext>(options => options.UseSqlServer(connection));
@@ -73,15 +73,15 @@ namespace ScienceActivityRecorder
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            //if (env.IsDevelopment())
+            //{
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+            //}
+            //else
+            //{
+            //    app.UseExceptionHandler("/Home/Error");
+            //}
 
             app.UseStaticFiles();
 
